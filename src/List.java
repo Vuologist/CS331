@@ -2,7 +2,7 @@ import java.util.Random;
 
 public class List {
 
-    private int[] list = new int[]{5, 4, 3, 2, 1, 10, 9, 8, 7, 6};
+    private int[] list = new int[]{5, 4, 3, 2, 1, 10, 9, 8, 7, 6, 71};
 
     public List(){
 

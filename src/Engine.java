@@ -12,18 +12,82 @@ public class Engine {
 
     private int[] medianOfMedians(List originalList){
         //sort each partition
-        for(int i = 0; i < originalList.getLength(); i+=5){
-            System.out.println("first run");
-            sort5(originalList, i);
+        int length = originalList.getLength();
+        int start = 0;
 
-            printArray(originalList.getList());
-        }
+        do {
+
+            System.out.println("start is " + start);
+
+            if (length - start >= 5) {
+                sort5(originalList, start);
+                start += 5;
+            } else if (length - start == 4) {
+                sort4(originalList, start);
+                start += 4;
+            } else if (length - start == 3) {
+                sort3(originalList, start);
+                start += 3;
+            }else if (length - start == 2) {
+                sort2(originalList, start);
+                start += 2;
+            } else
+                start++;
+        }while(start != length);
 
         return null;
     }
-    //blalablablablablablablabl
-    //sort for 5 elements; complete and fully tested
-    private int[] sort5(List partition, int x){
+
+    //sort 2 elements in 1 comparison
+    private void sort2(List partition, int x){
+        //a,b
+        if (partition.getElement(x) > partition.getElement(x+1))
+            //a,b
+            partition.swapElements(x, x+1);
+    }
+
+    //sort 3 elements in 3 comparisons
+    private void sort3(List partition, int x){
+        //a,b
+        if(partition.getElement(x) > partition.getElement(x+1))
+            //a,b
+            partition.swapElements(x, x+1);
+        //b,c
+        if(partition.getElement(x+1) > partition.getElement(x+2))
+            //b,c
+            partition.swapElements(x+1,x+2);
+        //a,b
+        if (partition.getElement(x) > partition.getElement(x+1))
+            //a,b
+            partition.swapElements(x,x+1);
+    }
+
+    //sort 4 elements in 5 comparisons
+    private void sort4(List partition, int x){
+        //a,b
+        if(partition.getElement(x) > partition.getElement(x+1))
+            //a,b
+            partition.swapElements(x,x+1);
+        //c,d
+        if(partition.getElement(x+2) > partition.getElement(x+3))
+            //c,d
+            partition.swapElements(x+2, x+3);
+        //a,c
+        if(partition.getElement(x) > partition.getElement(x+2))
+            //a,c
+            partition.swapElements(x, x+2);
+        //b,d
+        if(partition.getElement(x+1) > partition.getElement(x+3))
+            //b,d
+            partition.swapElements(x+1, x+3);
+        //b,c
+        if(partition.getElement(x+1) > partition.getElement(x+2))
+            //b,c
+            partition.swapElements(x+1,x+2);
+    }
+
+    //sort 5 elements in 7 comparisons; complete and fully tested
+    private void sort5(List partition, int x){
         //a, b
         if(partition.getElement(x) > partition.getElement(x+1))
             //a, b
@@ -75,11 +139,10 @@ public class Engine {
                 partition.swapElements(x+3, x+2);
             }
         }
-        return null;
     }
 
 
-
+    //print array
     private void printArray(int[] list){
         for(int i = 0; i < list.length; i++)
             System.out.print(list[i] + " ");
