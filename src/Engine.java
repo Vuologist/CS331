@@ -10,26 +10,27 @@ public class Engine {
         printArray(original.getList());
     }
 
-    private int[] medianOfMedians(List originalList){
+    private int[] medianOfMedians(List list){
         //sort each partition
-        int length = originalList.getLength();
+
+        //if(list.getLength() > 1)
+
+        int length = list.getLength();
         int start = 0;
 
         do {
-
             System.out.println("start is " + start);
-
             if (length - start >= 5) {
-                sort5(originalList, start);
+                sort5(list, start);
                 start += 5;
             } else if (length - start == 4) {
-                sort4(originalList, start);
+                sort4(list, start);
                 start += 4;
             } else if (length - start == 3) {
-                sort3(originalList, start);
+                sort3(list, start);
                 start += 3;
             }else if (length - start == 2) {
-                sort2(originalList, start);
+                sort2(list, start);
                 start += 2;
             } else
                 start++;
