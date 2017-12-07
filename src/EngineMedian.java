@@ -14,7 +14,8 @@ public class EngineMedian {
         printArray(medianCopy.getList());
         System.out.println();
 
-        //medianOfMedians(original);
+        int holder = medianOfMedians(medianCopy, 5);
+        //System.out.println(holder);
         //printArray(original.getList());
     }
 
@@ -25,17 +26,55 @@ public class EngineMedian {
         }
     }
 
-    private int medianOfMedians(List list){
-        //sort each partition
+    //works on the medianCopy list
+    private int medianOfMedians(List list, int element){
+        //create a new list of medians
+        //plus 1 because list is even and therefore one extra partition
+        List medians = new List(list.getLength()/5,3);
+        int offset = 0;
+        for(int i=0; i<medians.getLength();i++){
+            medians.setElement(i, list.getElement(offset+2));
+            offset+=5;
+        }
+        printArray(medians.getList());
 
-        //if list.getLength()
+        int pivot;
+        if(medians.getLength() <=5) {
+            sortController(medians);
+            pivot = medians.getElement(medians.getLength()/2);
+        }else{
+            pivot = medianOfMedians(medians, medians.getLength()/2);
+        }
 
+        int lessThanPivot = 0;
+        for(int i=0; i<list.getLength();i++){
+            if(list.getElement(i) < pivot)
+                lessThanPivot++;
+        }
+
+        List lowHalf = new List(lessThanPivot,3);
+        System.out.println(lessThanPivot);
+        List highHalf = new List(list.getLength()-lessThanPivot-1, 3);
+        System.out.println(list.getLength()-lessThanPivot-1);
+
+        int lengthOfLowHalf = lowHalf.getLength();
+        if(element < lengthOfLowHalf)
+            return medianOfMedians(lowHalf, element);
+        //area throwing error
+        else if (element > lengthOfLowHalf)
+            return medianOfMedians(highHalf, element-lengthOfLowHalf-1);
+        else
+            return pivot;
+    }
+
+    //method used to decide which sort method to use
+    private void sortController(List list){
+        //sort each partition in place
         if(list.getLength() > 1) {
             int length = list.getLength();
             int start = 0;
-
             do {
-                System.out.println("start is " + start);
+                //System.out.println("start is " + start);
                 if (length - start >= 5) {
                     sort5(list, start);
                     start += 5;
@@ -51,9 +90,7 @@ public class EngineMedian {
                 } else
                     start++;
             } while (start != length);
-        } else
-            return list.getElement(0);
-        return 0;
+        }
     }
 
     //sort 2 elements in 1 comparison

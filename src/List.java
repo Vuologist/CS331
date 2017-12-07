@@ -9,7 +9,7 @@ public class List {
     //if 3 copying a list
     public List(int length, int x) {
         if (x == 1){
-            list = new int[]{5, 4, 3, 2, 1, 10, 9, 8, 7, 6, 71};
+            list = new int[]{5, 4, 3, 2, 1, 10, 9, 8, 7, 6};
         }else if (x == 2) {
             list = new int[length];
             generateList();
