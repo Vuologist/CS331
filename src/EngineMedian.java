@@ -1,42 +1,59 @@
-import java.util.Arrays;
 
-public class Engine {
+public class EngineMedian {
 
-    public Engine (int listLength){
+    private List original;
+    private List medianCopy;
 
-        List original = new List(listLength);
+    public EngineMedian(int listLength){
+        original = new List(listLength, 1);
+        medianCopy = new List(listLength, 3);
+        copyListFromOriginal(medianCopy);
+
+
         printArray(original.getList());
-        medianOfMedians(original);
-        printArray(original.getList());
+        printArray(medianCopy.getList());
+        System.out.println();
+
+        //medianOfMedians(original);
+        //printArray(original.getList());
     }
 
-    private int[] medianOfMedians(List list){
+    //copy mirror copy of original array into destinationArray
+    private void copyListFromOriginal(List destinationList){
+        for(int i=0; i<original.getLength();i++){
+            destinationList.setElmeent(i,original.getElement(i));
+        }
+    }
+
+    private int medianOfMedians(List list){
         //sort each partition
 
-        //if(list.getLength() > 1)
+        //if list.getLength()
 
-        int length = list.getLength();
-        int start = 0;
+        if(list.getLength() > 1) {
+            int length = list.getLength();
+            int start = 0;
 
-        do {
-            System.out.println("start is " + start);
-            if (length - start >= 5) {
-                sort5(list, start);
-                start += 5;
-            } else if (length - start == 4) {
-                sort4(list, start);
-                start += 4;
-            } else if (length - start == 3) {
-                sort3(list, start);
-                start += 3;
-            }else if (length - start == 2) {
-                sort2(list, start);
-                start += 2;
-            } else
-                start++;
-        }while(start != length);
-
-        return null;
+            do {
+                System.out.println("start is " + start);
+                if (length - start >= 5) {
+                    sort5(list, start);
+                    start += 5;
+                } else if (length - start == 4) {
+                    sort4(list, start);
+                    start += 4;
+                } else if (length - start == 3) {
+                    sort3(list, start);
+                    start += 3;
+                } else if (length - start == 2) {
+                    sort2(list, start);
+                    start += 2;
+                } else
+                    start++;
+            } while (start != length);
+        } else
+            return list.getElement(0);
+        return 0;
     }
 
     //sort 2 elements in 1 comparison
@@ -142,12 +159,10 @@ public class Engine {
         }
     }
 
-
     //print array
     private void printArray(int[] list){
         for(int i = 0; i < list.length; i++)
             System.out.print(list[i] + " ");
         System.out.println();
     }
-
 }
