@@ -15,9 +15,7 @@ public class EngineAlternative {
 
         sortAlternative(alternativeCopy.getList(),0,alternativeCopy.getLength()-1);
         printArray(alternativeCopy.getList());
-
-
-
+        System.out.println("Median: " + median());
     }
 
     //copy mirror copy of original array into destinationArray
@@ -96,10 +94,13 @@ public class EngineAlternative {
         }
     }
 
+    //calculates the median of a list (restricted to even lists)
     private double median(){
+        int length = alternativeCopy.getLength();
+        int middle1 = alternativeCopy.getElement(length/2);
+        int middle2 = alternativeCopy.getElement((length/2)+1);
 
-
-        return 0.0;
+        return ((double)middle1+middle2)/2;
     }
 
     //print array
