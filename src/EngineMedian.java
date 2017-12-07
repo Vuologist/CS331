@@ -1,3 +1,4 @@
+import javax.print.attribute.standard.Media;
 
 public class EngineMedian {
 
@@ -7,41 +8,51 @@ public class EngineMedian {
     public EngineMedian(int listLength){
         original = new List(listLength, 1);
         medianCopy = new List(listLength, 3);
-        copyListFromOriginal(medianCopy);
+        copyList(original, medianCopy, 0, original.getLength());
 
 
         printArray(original.getList());
         printArray(medianCopy.getList());
         System.out.println();
 
-        int holder = medianOfMedians(medianCopy, 5);
-        //System.out.println(holder);
-        //printArray(original.getList());
+        int median1 = medianOfMedians(medianCopy, (medianCopy.getLength()/2)-1);
+        int median2 = medianOfMedians(medianCopy, (medianCopy.getLength()/2));
+        System.out.println(median1);
+        System.out.println(median2);
+        System.out.println(elementReturn(median1,median2));
     }
 
-    //copy mirror copy of original array into destinationArray
-    private void copyListFromOriginal(List destinationList){
-        for(int i=0; i<original.getLength();i++){
-            destinationList.setElement(i,original.getElement(i));
-        }
+    private double elementReturn(int median1, int median2){
+        return (median1+median2)/2.0;
     }
 
-    //works on the medianCopy list
+    //creates new list of medians and then finds the specified element
     private int medianOfMedians(List list, int element){
-        //create a new list of medians
-        //plus 1 because list is even and therefore one extra partition
-        List medians = new List(list.getLength()/5,3);
+        int listLength = (list.getLength()/5);
+        //account for last part of list that may be less than 5 elements
+        if(list.getLength()%5 != 0){
+            listLength++;
+        }
+
+        List medians = new List(listLength,3);
         int offset = 0;
         for(int i=0; i<medians.getLength();i++){
-            medians.setElement(i, list.getElement(offset+2));
-            offset+=5;
+
+            if(medians.getLength()-offset >= 5){
+                medians.setElement(i, list.getElement(offset+2));
+                offset+=5;
+            }else
+                //account for median list being less than 5
+                medians.setElement(i, list.getElement((medians.getLength()-offset)/2));
         }
-        printArray(medians.getList());
+        //printArray(medians.getList());
 
         int pivot;
         if(medians.getLength() <=5) {
             sortController(medians);
+            //printArray(medians.getList());
             pivot = medians.getElement(medians.getLength()/2);
+            //System.out.println("this is the piv at 47: " + pivot);
         }else{
             pivot = medianOfMedians(medians, medians.getLength()/2);
         }
@@ -53,14 +64,34 @@ public class EngineMedian {
         }
 
         List lowHalf = new List(lessThanPivot,3);
-        System.out.println(lessThanPivot);
+        //System.out.println(lessThanPivot);
         List highHalf = new List(list.getLength()-lessThanPivot-1, 3);
-        System.out.println(list.getLength()-lessThanPivot-1);
+        //System.out.println(list.getLength()-lessThanPivot-1);
+        int listIndex = 0;
+        int lowHalfIndex = 0;
+        int highHalfIndex = 0;
+        do{
+            if(list.getElement(listIndex) == pivot){
+                listIndex++;
+                continue;
+            }else if(list.getElement(listIndex) < pivot) {
+                lowHalf.setElement(lowHalfIndex, list.getElement(listIndex));
+                lowHalfIndex++;
+            }else {
+                highHalf.setElement(highHalfIndex, list.getElement(listIndex));
+                highHalfIndex++;
+            }
+            listIndex++;
+        }while (listIndex < list.getLength());
+
+        //System.out.println("printing lowhalf and highhalf");
+        //printArray(lowHalf.getList());
+        //System.out.println();
+        //printArray(highHalf.getList());
 
         int lengthOfLowHalf = lowHalf.getLength();
         if(element < lengthOfLowHalf)
             return medianOfMedians(lowHalf, element);
-        //area throwing error
         else if (element > lengthOfLowHalf)
             return medianOfMedians(highHalf, element-lengthOfLowHalf-1);
         else
@@ -193,6 +224,14 @@ public class EngineMedian {
                 //d, c
                 partition.swapElements(x+3, x+2);
             }
+        }
+    }
+
+    //copy mirror copy of original array into destinationArray
+    //or used to copy for lowHalf or highHalf
+    private void copyList(List source, List destinationList, int start, int end){
+        for(int i=start; i<end;i++){
+            destinationList.setElement(i,source.getElement(i));
         }
     }
 
