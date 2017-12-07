@@ -30,7 +30,7 @@ public class List {
         return list;
     }
 
-    public void setElmeent(int index, int value){
+    public void setElement(int index, int value){
         list[index] = value;
     }
 

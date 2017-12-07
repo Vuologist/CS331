@@ -21,7 +21,7 @@ public class EngineMedian {
     //copy mirror copy of original array into destinationArray
     private void copyListFromOriginal(List destinationList){
         for(int i=0; i<original.getLength();i++){
-            destinationList.setElmeent(i,original.getElement(i));
+            destinationList.setElement(i,original.getElement(i));
         }
     }
 
