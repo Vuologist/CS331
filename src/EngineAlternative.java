@@ -5,17 +5,21 @@ public class EngineAlternative {
     private List alternativeCopy;
 
     public EngineAlternative(int listLength){
-        original = new List(listLength, 1);
+        original = new List(listLength, 2);
         alternativeCopy = new List(listLength, 3);
         copyListFromOriginal(alternativeCopy);
 
-        printArray(original.getList());
-        printArray(alternativeCopy.getList());
-        System.out.println();
+        //printArray(original.getList());
+        //printArray(alternativeCopy.getList());
+        //System.out.println();
 
         sortAlternative(alternativeCopy.getList(),0,alternativeCopy.getLength()-1);
-        printArray(alternativeCopy.getList());
-        System.out.println("Median: " + median());
+        //printArray(alternativeCopy.getList());
+        //System.out.println("Median: " + median());
+    }
+
+    public double getAlternativeMedian(){
+        return median();
     }
 
     //copy mirror copy of original array into destinationArray
@@ -103,10 +107,10 @@ public class EngineAlternative {
         return ((double)middle1+middle2)/2;
     }
 
-    //print array
-    private void printArray(int[] list){
-        for(int i = 0; i < list.length; i++)
-            System.out.print(list[i] + " ");
-        System.out.println();
-    }
+//    //print array
+//    private void printArray(int[] list){
+//        for(int i = 0; i < list.length; i++)
+//            System.out.print(list[i] + " ");
+//        System.out.println();
+//    }
 }

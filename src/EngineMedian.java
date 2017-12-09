@@ -3,22 +3,27 @@ public class EngineMedian {
 
     private List original;
     private List medianCopy;
+    private double medianOfMedians;
 
     public EngineMedian(int listLength){
-        original = new List(listLength, 1);
+        original = new List(listLength, 2);
         medianCopy = new List(listLength, 3);
         copyList(original, medianCopy, 0, original.getLength());
 
 
-        printArray(original.getList());
-        printArray(medianCopy.getList());
-        System.out.println();
-
+        //printArray(original.getList());
+        //printArray(medianCopy.getList());
+        //System.out.println();
+        //printArray(medianCopy.getList());
         int median1 = medianOfMedians(medianCopy, (medianCopy.getLength()/2)-1);
         int median2 = medianOfMedians(medianCopy, (medianCopy.getLength()/2));
-        System.out.println(median1);
-        System.out.println(median2);
-        System.out.println(elementReturn(median1,median2));
+        //System.out.println(median1);
+        //System.out.println(median2);
+        medianOfMedians = elementReturn(median1,median2);
+    }
+
+    public double getMedianOfMedianElement(){
+        return medianOfMedians;
     }
 
     private double elementReturn(int median1, int median2){
@@ -77,7 +82,7 @@ public class EngineMedian {
                 lowHalf.setElement(lowHalfIndex, list.getElement(listIndex));
                 lowHalfIndex++;
             }else {
-                highHalf.setElement(highHalfIndex, list.getElement(listIndex));
+                highHalf.setElement(lowHalfIndex, list.getElement(listIndex));
                 highHalfIndex++;
             }
             listIndex++;
